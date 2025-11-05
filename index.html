@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inversão de Foto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Inversão de Foto</h1>
+        <p class="subtitulo">Selecione duas imagens e troque suas posições facilmente!</p>
+    </header>
+
+    <div class="container">
+        <!-- Lado Esquerdo -->
+        <div class="imagem-box">
+            <img id="imagem-esquerda" src="" alt="Imagem Esquerda">
+            <button id="btn-esquerda" class="add-btn">Adicionar Imagem Esquerda</button>
+            <input type="file" id="input-esquerda" accept="image/*" style="display: none;">
+        </div>
+
+        <!-- Botão Central -->
+        <button id="swap-btn">↔️</button>
+
+        <!-- Lado Direito -->
+        <div class="imagem-box">
+            <img id="imagem-direita" src="" alt="Imagem Direita">
+            <button id="btn-direita" class="add-btn">Adicionar Imagem Direita</button>
+            <input type="file" id="input-direita" accept="image/*" style="display: none;">
+        </div>
+    </div>
+
+    <script>
+        const imagemEsquerda = document.getElementById('imagem-esquerda');
+        const imagemDireita = document.getElementById('imagem-direita');
+        const inputEsquerda = document.getElementById('input-esquerda');
+        const inputDireita = document.getElementById('input-direita');
+        const btnEsquerda = document.getElementById('btn-esquerda');
+        const btnDireita = document.getElementById('btn-direita');
+        const swapBtn = document.getElementById('swap-btn');
+
+        // Abrir seletor de imagens
+        btnEsquerda.addEventListener('click', () => inputEsquerda.click());
+        btnDireita.addEventListener('click', () => inputDireita.click());
+
+        // Carregar imagens
+        inputEsquerda.addEventListener('change', (event) => {
+            const arquivo = event.target.files[0];
+            if (arquivo) imagemEsquerda.src = URL.createObjectURL(arquivo);
+        });
+
+        inputDireita.addEventListener('change', (event) => {
+            const arquivo = event.target.files[0];
+            if (arquivo) imagemDireita.src = URL.createObjectURL(arquivo);
+        });
+
+        // Trocar imagens com animação de rotação
+        swapBtn.addEventListener('click', () => {
+            // Adiciona a classe de rotação
+            imagemEsquerda.classList.add('rotate');
+            imagemDireita.classList.add('rotate');
+
+            setTimeout(() => {
+                // Troca as imagens depois da rotação
+                const temp = imagemEsquerda.src;
+                imagemEsquerda.src = imagemDireita.src;
+                imagemDireita.src = temp;
+
+                // Remove a classe para resetar a animação
+                imagemEsquerda.classList.remove('rotate');
+                imagemDireita.classList.remove('rotate');
+            }, 500); // duração da animação
+        });
+    </script>
+
+</body>
+</html>
